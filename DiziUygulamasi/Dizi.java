@@ -1,4 +1,3 @@
-package DiziUygulamasi;
 
 import java.util.Arrays;
 
@@ -7,24 +6,40 @@ public class Dizi {
     int[] dizi;
     int elemanSayisi;
 
-    public Dizi(int boyut) {
+    public Dizi(int boyut) { // constructor bloğu oluşturuldu. boyut isteniyor. eleman sayisi 0 eşitlendi.
         dizi = new int[boyut];
         elemanSayisi = 0;
     }
 
     public void ekle(int a) {
+        /*
+         * if (elemanSayisi >= dizi.length) { //eleman sayısı dizinin sınırından
+         * fazlaysa dolu uyarisi yapar.
+         * System.out.println("dizi dolu");
+         * } else { //diziye ekleyip eleman sayisini arttırır.
+         * dizi[elemanSayisi++] = a;
+         * }
+         */
+        int i = 0;
         if (elemanSayisi >= dizi.length) {
             System.out.println("dizi dolu");
         } else {
-            dizi[elemanSayisi++] = a;
+            for (i = (elemanSayisi - 1); i >= 0 && dizi[i] > a; i--) { // i sıfırdan büyük olduğu ve dizinin i. indeksi
+                                                                       // eklenecek sayıdan büyük olduğu durumda indeksi
+                                                                       // bir azaltır.
+                dizi[i + 1] = dizi[i]; // dizinin i+1. elemanına dizinin i. elemanını atama yapar. 
+            }
+
+            dizi[i + 1] = a; // döngü boyunca eklenecek olan değer bir geriye doğru hareket eder.
+            elemanSayisi++; // ekleme yapıldığı için eleman sayısını bir arttırırız.
+
         }
     }
 
     public int arama(int a) {
-        for (int i = 0; i < elemanSayisi; i++) {
-            if (dizi[i] == a) {
-                System.out.println("bulundu");
-                return i;
+        for (int i = 0; i < elemanSayisi; i++) { // eleman sayisi kadar gezer.
+            if (dizi[i] == a) { // aradigimiz dizinin elemanina eşitse bulur.
+                return i; // indexini dönerir.
             }
         }
         System.out.println("bulunamadiiii!!");
@@ -33,7 +48,7 @@ public class Dizi {
 
     public void sil(int a) {
 
-        int indis = this.arama(a);
+        int indis = this.arama(a); // indexini indise atıyor.
 
         if (indis == -1) {
             System.out.println("aradiginiz sayi yok ");
